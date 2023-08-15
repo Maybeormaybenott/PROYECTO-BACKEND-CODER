@@ -1,5 +1,9 @@
+const fs = require('fs')
+const archivo = './Productos.json';
+
+
 class ProductManager {
-    
+    static id = 0;
     constructor(){
         this.products = [];
         this.nextProductId = 1;
@@ -7,7 +11,7 @@ class ProductManager {
 
     addProduct(title, description, price, thumbnail, code, stock){
 
-        if (!title || !description || !price || !thumbnail || !code || stock === undefined) {
+        if (!title || !description || !price || !thumbnail || !code || stock === undefined || stock === null) {
             console.log("Todos los campos son obligatorios");
             return;
         }
@@ -18,7 +22,7 @@ class ProductManager {
         }
 
         const product = {
-            id: this.nextProductId++,
+            id: ProductManager.id++,
             title,
             description,
             price,
@@ -27,6 +31,7 @@ class ProductManager {
             stock
         };
         this.products.push(product);
+        console.log("Producto agregado correctamente")
     }
 
 
@@ -55,5 +60,12 @@ console.log("Por ID:", productById);
 
 // Found ( hay objeto creado )
 
-productManager.addProduct ("Coco y vainilla", "Difusor aromatizante, excelente calidad", 24, "cocoyvainilla.jpg", "A-1", 15);
-console.log(productManager.getProducts());
+// productManager.addProduct ("Coco y vainilla", "Difusor aromatizante, excelente calidad", 24, "cocoyvainilla.jpg", "A-1", 15);
+// console.log(productManager.getProducts());
+
+
+// Ya existe un producto con el mismo CODIGO
+
+// productManager.addProduct ("Coco y amapola", "Difusor aromatizante, excelente calidad", 30, "cocoyamapola.jpg", "A-1", 13);
+// console.log(productManager.getProducts());
+
