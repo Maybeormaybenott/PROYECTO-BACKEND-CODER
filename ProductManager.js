@@ -68,27 +68,58 @@ class ProductManager {
         if (producto){
             return producto;
         }else{
-            console.log("Not found")
+            console.log("Producto no encontrado")
         }
-    };
-    
-}
-    
+    }
 
-   
+    async actualizarProducto (id, fieldToUpdate, newValue){
+        try {
+            const productos = await this.consultarProductos();
+            const productoAct = productos.find(producto => producto.id === id);
+
+            if (productoAct){
+                productoAct[fieldToUpdate] = newValue;
+                await fs.promises.writeFile(archivo, JSON.stringify(productos, null, '\t'));
+                console.log(`Producto con ID ${id} actualizado`);
+            }else{
+                console.log(`Producto con ID ${id} no encontrado`)
+            }
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        async eliminarProducto(id){
+            try {
+                let productos = await this.consultarProductos();
+                productos = productos.filter(producto => producto.id !== id);
+                await fs.promises.writeFile(archivo, JSON.stringify(productos, null, '\t'));
+                console.log(`Producto con ID ${id} eliminado`);
+
+            }catch (error) {
+                console.log(error);
+            }
+        }
+    }
 
 const productManager = new ProductManager();
 productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 37, 10)
 
-// const asyncFunction = async () => {
-//     const productManager = new ProductManager();
+const asyncFunction = async () => {
+    const productManager = new ProductManager();
     
-//     await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
-//     await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
-//     await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
-// };
+    await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
+    await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
+    await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
+    await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
+    
+    await productManager.actualizarProducto(2,'price', 4000);
 
-const productos = productManager
+    await productManager.eliminarProducto(3);
+
+    const productos = await productManager.consultarProductos();
+    console.log(productos)
+};
 
 asyncFunction();
-console.log(productos)

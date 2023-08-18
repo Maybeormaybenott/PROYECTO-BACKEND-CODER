@@ -9,3 +9,22 @@
     <script src="index.js"></script>
   </body>
 </html>
+
+
+async eliminarProducto(id){
+  const productos = await this.consultar();
+  const productosSinId = productos.filter(( producto ) => producto.id != id);
+  await fs.promises.writeFile(
+      archivo,
+      JSON.stringify(productosSinId, null, '\t')
+  )
+}
+
+
+const asyncFunction = async () => {
+  const productManager = new ProductManager();
+  
+  await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
+  await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
+  await productManager.crearProducto('Kimcha', 'Rokybalboa', 49, 'Saturno', 'thumbnail', 478, 10)
+};
