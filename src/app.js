@@ -1,32 +1,13 @@
-const express = require("express");
-const ProductManager = require("./ProductManager.js");
-const productManager = new ProductManager();
+import express from "express";
+import handlebars from "express-handlebars";
+import { Server } from "socket.io";
+import cartRouter from "./routes/cartRouter.js";
+import productsRouter from "./routes/productsRouter.js";
 
 const app = express();
-
-app.use(express.json());
+const httpServer = app.listen(8080, () => console.log("Sabe"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.get("/productos", async (req, res) => {
-  const productos = await productManager.consultarProductos();
-  const limit = req.query.limit;
-
-  if (limit) {
-    return res.send(productos.slice(0, limit));
-  } else {
-    res.send(productos);
-  }
-});
-
-app.get("/productos/:productoId", async (req, res) => {
-  const productoId = parseInt(req.params.productoId, 10);
-  const producto = await productManager.consultarProductosById(productoId);
-
-  if (producto) {
-    res.send(producto);
-  } else {
-    res.status(404).send({ error: "Producto no encontrado" });
-  }
-});
-
-app.listen(8080, () => console.log("holanda"));
+app.use("/api/products", productsRouter);
+app.use("/api/carts/", cartRouter);
