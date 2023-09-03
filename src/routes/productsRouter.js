@@ -44,12 +44,13 @@ router.post("/", async (req, res) => {
   }
 
   await productManager.crearProducto(product);
-  res.status(200).send();
+  req.context.socketServer.emit("productoAgregado", nuevoProducto);
+  res.status(200).send("Producto agregado exitosamente");
 });
 
 router.put("/:pid", async (req, res) => {
   if (req.body.id) {
-    return res.status(400).send("No deberias enviar un ID");
+    return res.status(400).send("No envíes un ID");
   }
 
   await productManager.actualizarProducto(
@@ -61,7 +62,8 @@ router.put("/:pid", async (req, res) => {
 
 router.delete("/:pid", async (req, res) => {
   await productManager.eliminarProducto(parseInt(req.params.pid, 10));
-  res.status(200).send();
+  req.context.socketServer.emit("productoAgregado", nuevoProducto);
+  res.status(200).send("Producto eliminado");
 });
 
 export default router;

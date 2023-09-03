@@ -13,5 +13,19 @@
 			" /public/imagen2.png",
 			"/public/imagen3.png"
 		]
+	},
+	{
+		"id": 2,
+		"title": "producto",
+		"description": "descrip",
+		"code": "124",
+		"price": 1200,
+		"status": false,
+		"stock": 33,
+		"category": "Chaleco",
+		"thumbnails": [
+			"/public/imagen1.png",
+			"/public/imagen2.png"
+		]
 	}
 ]
