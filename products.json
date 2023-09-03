@@ -1,15 +1,17 @@
-{
-	"id": 1,
-	"title": "Hola",
-	"description": "Buenisimo",
-	"code": "123",
-	"price": 123,
-	"status": false,
-	"stock": 43,
-	"category": "Caddt",
-	"thumbnails": [
-		"/public/imagen3.png ",
-		" /public/imagen2.png",
-		"/public/imagen3.png"
-	]
-}
+[
+	{
+		"id": 1,
+		"title": "Hola",
+		"description": "Buenisimo",
+		"code": "123",
+		"price": 123,
+		"status": false,
+		"stock": 43,
+		"category": "Caddt",
+		"thumbnails": [
+			"/public/imagen3.png ",
+			" /public/imagen2.png",
+			"/public/imagen3.png"
+		]
+	}
+]

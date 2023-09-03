@@ -2,9 +2,8 @@ import { Router } from "express";
 import ProductManager from "../ProductManager.js";
 
 const router = Router();
-const products = [];
-
 const productManager = new ProductManager("./products.json");
+
 router.get("/", async (req, res) => {
   const products = await productManager.consultarProductos();
   const limit = req.query.limit;
@@ -32,7 +31,17 @@ router.post("/", async (req, res) => {
     product.status = true;
   }
 
-  // if(!req.body.title, !req.body.description, !)
+  if (
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.code ||
+    !req.body.price ||
+    !req.body.stock ||
+    !req.body.category ||
+    !req.body.thumbnails
+  ) {
+    return res.status(400).send("Todos los campos son obligatorios");
+  }
 
   await productManager.crearProducto(product);
   res.status(200).send();
